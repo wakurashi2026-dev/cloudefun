@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://akarinomane.wakurashi2026.workers.dev/sitemap.xml

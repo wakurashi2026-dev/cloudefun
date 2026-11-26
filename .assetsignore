@@ -1,0 +1,6 @@
+# 公開ページに出さないファイル
+.git
+CLAUDE.md
+README.md
+.assetsignore
+tools
