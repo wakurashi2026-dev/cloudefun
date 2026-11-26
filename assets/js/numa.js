@@ -1,4 +1,4 @@
-/* 和季づき「沼」案：季節で変わる入口、いま何皿目かの表示、食卓→うつわの入れ替え */
+/* 和季づき「沼」案：季節で変わる入口と二皿目、いま何皿目かの表示 */
 (function () {
   var root = document.documentElement;
 
@@ -58,10 +58,6 @@
   var menuLinks = document.querySelectorAll('.n-menu a');
   var now = -1, ticking = false;
 
-  /* ---- 二皿目：食卓の写真が、下へ進むとうつわの写真に入れ替わる ---- */
-  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  var rv = q('[data-reveal]');
-  if (rv && !reduce) rv.classList.add('is-live');
 
   function headH() { var h = q('.n-head'); return h ? h.offsetHeight : 0; }
   function update() {
@@ -78,13 +74,6 @@
     }
     var c2 = courses[1];
     document.body.classList.toggle('at-top', !c2 || c2.getBoundingClientRect().top > window.innerHeight * 0.6);
-    if (rv && rv.classList.contains('is-live')) {
-      var r = rv.getBoundingClientRect(), stage = rv.firstElementChild;
-      var total = rv.offsetHeight - stage.offsetHeight;
-      var p = total > 0 ? Math.min(1, Math.max(0, (headH() + 12 - r.top) / total)) : 0;
-      var t = Math.min(1, Math.max(0, (p - 0.3) / 0.4));
-      rv.style.setProperty('--b', (t * t * (3 - 2 * t)).toFixed(3));
-    }
   }
   function onScroll() { if (!ticking) { ticking = true; window.requestAnimationFrame(update); } }
   window.addEventListener('scroll', onScroll, { passive: true });

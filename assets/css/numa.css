@@ -1,7 +1,7 @@
 /* ============================================================
    和季づき「沼」案：ひと皿ずつ、深くなるトップページ
-   入口は写真一枚と言葉ひとつ。下へ進むほど、食卓→料理人→器→三者と
-   背景に近づき、六皿目で初めてしつらえを並べる。いまどこにいるかは
+   入口は写真一枚とキャッチ、すぐ下に六つのしつらえ（お品書き）。
+   そこから下へ進むほど、食卓→料理人→器→三者と背景に近づく。切り替え式の見せ方は使わない。いまどこにいるかは
    「献立」（PCは左、スマホは上の細い帯）で静かに示す。
    色と書体は akari と同じ（下地 #F8F8F7／墨／差し色は呉須と錆だけ）。
    ============================================================ */
@@ -82,7 +82,9 @@ html.js body.at-top .n-bar { opacity: 0; }
 .n-scene-txt { text-align: center; padding: clamp(30px, 7vw, 56px) 20px 0; }
 .n-sekki { display: inline-flex; gap: 12px; align-items: baseline; font: 500 14px/1 var(--head); letter-spacing: 0.24em; color: var(--sabi); }
 .n-sekki-date { font: 400 12.5px/1 var(--jp); letter-spacing: 0.1em; color: var(--n-soft); }
-.n-catch { margin-top: 20px; font: 500 clamp(25px, 6.6vw, 40px)/1.7 var(--head); letter-spacing: 0.14em; color: var(--head-ink); }
+.n-catch { margin-top: 20px; font: 500 clamp(15px, 4.8vw, 30px)/1.8 var(--head); letter-spacing: 0.14em; color: #3a3d44; }
+.n-cl { display: block; }
+.n-cl-2 { margin-block: 2px; font-size: 1.14em; color: var(--head-ink); }
 .n-cue { margin-top: clamp(30px, 7vw, 48px); font: 400 12.5px/1 var(--jp); letter-spacing: 0.24em; color: var(--n-soft); }
 .n-cue span { display: inline-flex; flex-direction: column; align-items: center; gap: 12px; }
 .n-cue span::after { content: ""; width: 1px; height: 44px; background: linear-gradient(var(--sabi), transparent); }
@@ -91,26 +93,9 @@ html.js body.at-top .n-bar { opacity: 0; }
   @keyframes n-drip { 0% { transform: scaleY(0); opacity: 1; } 60% { transform: scaleY(1); opacity: 1; } 100% { transform: scaleY(1); opacity: 0; } }
 }
 
-/* ---------- 二皿目：食卓 → うつわ（このページで動くのはここだけ） ---------- */
-.n-rv-figs { position: relative; width: min(100%, calc((100svh - var(--head-h) - 240px) * 1.5)); margin-inline: auto; }
-.n-rv-figs img { width: 100%; height: auto; aspect-ratio: 3 / 2; object-fit: cover; }
-.n-rv-caps { position: relative; max-width: 620px; margin: 22px auto 0; padding-inline: 24px; text-align: center; }
-.n-rv-cap-a { font: 400 16px/2.1 var(--head); letter-spacing: 0.08em; color: var(--n-text); }
-.n-rv-cap-b { margin-top: 26px; }
 .n-rv-k { display: block; font: 500 12.5px/1 var(--head); letter-spacing: 0.24em; color: var(--sabi); }
 .n-rv-name { display: block; margin-top: 12px; font: 500 18px/1.7 var(--head); letter-spacing: 0.1em; color: var(--head-ink); }
 .n-rv-set { display: block; margin-top: 4px; font-size: 14px; color: var(--n-soft); }
-.n-rv-figs .n-rv-b { margin-top: 26px; }
-@media (min-width: 760px) { .n-reveal-stage { padding-inline: 40px; } }
-/* JS が動くとき：写真が画面に留まり、下へ進むと食卓の写真がうつわの写真に入れ替わる */
-html.js .n-reveal.is-live { height: 210svh; }
-html.js .n-reveal.is-live .n-reveal-stage { position: sticky; top: calc(var(--head-h) + 12px); }
-html.js .n-reveal.is-live .n-rv-figs .n-rv-b { position: absolute; inset: 0; margin: 0; opacity: var(--b, 0); }
-html.js .n-reveal.is-live .n-rv-caps { display: grid; }
-html.js .n-reveal.is-live .n-rv-cap { grid-area: 1 / 1; margin: 0; align-self: start; }
-html.js .n-reveal.is-live .n-rv-cap-a { opacity: clamp(0, 1 - var(--b, 0) * 2, 1); }
-html.js .n-reveal.is-live .n-rv-cap-b { opacity: clamp(0, var(--b, 0) * 2 - 1, 1); }
-@media (max-width: 759px) { html.js .n-reveal.is-live { height: 190svh; } }
 
 /* ---------- 三皿目：料理人（一言は写真の左上に白で） ---------- */
 .n-chef-fig { position: relative; }
@@ -190,3 +175,22 @@ html.js .n-reveal.is-live .n-rv-cap-b { opacity: clamp(0, var(--b, 0) * 2 - 1, 1
 
 /* PC：左の献立と重ならないよう、本文の幅を左右に余白を残して決める */
 @media (min-width: 1100px) { .n-c { max-width: min(1080px, calc(100vw - 340px)); } }
+
+/* ---------- 二皿目：情景 → 文 → うつわ → 名前（縦に並べる。切り替えない） ---------- */
+.n-tb-text { max-width: 620px; margin: 22px auto 0; padding-inline: 24px; text-align: center; font: 400 16px/2.1 var(--head); letter-spacing: 0.08em; color: var(--n-text); }
+.n-tb-prod { max-width: 640px; margin: clamp(32px, 7vw, 48px) auto 0; padding-inline: 24px; }
+.n-tb-cap { max-width: 620px; margin: 18px auto 0; padding-inline: 24px; text-align: center; }
+
+/* ---------- 入口の下：六つのしつらえ（お品書き）。六つを同じ大きさで、一度に見せる ---------- */
+.n-ms { max-width: 960px; margin: clamp(48px, 10vw, 72px) auto 0; padding-inline: 16px; }
+.n-ms-h { text-align: center; margin-bottom: 20px; font: 500 15px/1.6 var(--head); letter-spacing: 0.24em; color: var(--head-ink); }
+.n-ms-grid { list-style: none; display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px 10px; }
+.n-ms-grid a { display: grid; gap: 4px; color: var(--ink); text-decoration: none; }
+.n-ms-grid img { width: 100%; height: auto; aspect-ratio: 1 / 1; object-fit: cover; }
+.n-ms-no { margin-top: 4px; font: 500 11.5px/1 var(--head); letter-spacing: 0.2em; color: var(--sabi); }
+.n-ms-name { font: 500 13.5px/1.5 var(--head); letter-spacing: 0.04em; color: var(--head-ink); }
+.n-ms-grid a:hover .n-ms-name, .n-ms-grid a:focus-visible .n-ms-name { color: var(--gosu); text-decoration: underline; text-decoration-color: var(--sabi); text-underline-offset: 5px; }
+.n-ms-price { margin-top: 20px; text-align: center; font: 700 15px/1.4 var(--jp); color: var(--head-ink); }
+.n-ms-price small { font-weight: 400; font-size: 12px; color: var(--n-soft); }
+@media (min-width: 760px) { .n-ms-grid { grid-template-columns: repeat(6, 1fr); gap: 20px 14px; } }
+.n-scene .n-cue { text-align: center; }
