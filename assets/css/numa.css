@@ -71,29 +71,55 @@ body.numa { background: var(--bg); color: var(--n-text); font-size: 16px; line-h
   .n-menu-hint { padding-bottom: 28px; }
 }
 
-/* ---------- 六つの食卓 ---------- */
-.n-courses { margin-top: clamp(56px, 12vw, 96px); }
-.n-course { max-width: 760px; margin: 0 auto; padding-block: clamp(56px, 12vw, 88px); }
+/* ---------- 六つの食卓：一つの食卓を一画面に ----------
+   スマホ：見出し → 食卓の写真（右下に届くうつわを重ね、点数は左の余白）→ 文 → ボタン
+   PC：左に食卓の写真、右に 見出し → 文 → 届くうつわと点数 → ボタン */
+.n-courses { margin-top: clamp(48px, 10vw, 88px); }
+.n-course {
+  --g: 0px; /* 食卓の写真の左右の余白 */
+  display: grid; grid-template-columns: minmax(0, 1fr);
+  grid-template-areas: "head" "scene" "prod" "text" "go";
+  max-width: 760px; margin: 0 auto; padding-block: clamp(32px, 8vw, 56px);
+}
 .n-course + .n-course { border-top: 1px solid var(--line); }
 .n-course:first-child { padding-top: 8px; }
-.n-course-head { text-align: center; padding-inline: 20px; }
+.n-course-side { display: contents; }
+.n-course-head { grid-area: head; text-align: center; padding-inline: 20px; }
 .n-course-no { font: 500 13px/1 var(--jp); letter-spacing: 0.3em; color: var(--sabi); }
-.n-course-name { margin-top: 12px; font: 500 clamp(19px, 5vw, 25px)/1.7 var(--head); letter-spacing: 0.1em; color: var(--head-ink); text-wrap: balance; }
-.n-course-sub { margin-top: 4px; font: 500 14px/1.6 var(--head); letter-spacing: 0.16em; color: var(--gosu); }
-.n-course-scene { margin: clamp(22px, 5vw, 32px) 0 0; }
+.n-course-name { margin-top: 10px; font: 500 clamp(19px, 5vw, 25px)/1.7 var(--head); letter-spacing: 0.1em; color: var(--head-ink); text-wrap: balance; }
+.n-course-sub { margin-top: 2px; font: 500 14px/1.6 var(--head); letter-spacing: 0.16em; color: var(--gosu); }
+.n-course-scene { grid-area: scene; margin: clamp(16px, 4vw, 24px) 0 0; padding-inline: var(--g); }
 .n-course-scene img { width: 100%; height: auto; aspect-ratio: 4 / 3; object-fit: cover; display: block; }
-.n-course-text { max-width: 600px; margin: 22px auto 0; padding-inline: 24px; text-align: center; font: 400 15.5px/2.15 var(--head); letter-spacing: 0.06em; }
-.n-course-prod { max-width: 620px; margin: clamp(28px, 6vw, 40px) auto 0; padding-inline: 24px; }
-.n-course-prod img { width: 100%; height: auto; aspect-ratio: 3 / 2; object-fit: cover; display: block; }
-.n-course-prod figcaption { margin-top: 10px; text-align: center; font-size: 13.5px; letter-spacing: 0.12em; color: var(--n-soft); }
+.n-course-prod {
+  grid-area: prod; position: relative; z-index: 1;
+  display: grid; grid-template-columns: minmax(0, 1fr) min(50%, 300px); align-items: end; column-gap: 12px;
+  margin: calc(-1 * min(12%, 80px)) 0 0; padding-inline: calc(var(--g) + 16px) calc(var(--g) + 12px);
+}
+.n-course-prod img { grid-column: 2; grid-row: 1; width: 100%; height: auto; aspect-ratio: 3 / 2; object-fit: cover; display: block; padding: 5px; background: #fff; border: 1px solid var(--line); }
+.n-course-prod figcaption { grid-column: 1; grid-row: 1; font-size: clamp(12px, 3.4vw, 13.5px); line-height: 1.7; letter-spacing: 0.08em; color: var(--n-soft); }
 .n-course-prod figcaption b { color: var(--head-ink); font-weight: 700; }
-.n-course-go { max-width: 520px; margin: 24px auto 0; padding-inline: 24px; text-align: center; }
-.n-course-go .btn { width: 100%; }
+.n-course-text { grid-area: text; width: 100%; max-width: 600px; margin: 14px auto 0; padding-inline: 24px; text-align: center; font: 400 15px/1.95 var(--head); letter-spacing: 0.06em; }
+.n-course-go { grid-area: go; width: 100%; max-width: 520px; margin: 18px auto 0; padding-inline: 24px; text-align: center; }
+.n-course-go .btn { width: 100%; margin: 0 auto; }
 .n-course-hint { margin-top: 10px; font-size: 13px; line-height: 1.7; letter-spacing: 0.06em; color: var(--n-soft); }
-.n-course-nav { display: flex; justify-content: space-between; gap: 16px; max-width: 520px; margin: 28px auto 0; padding-inline: 24px; font-size: 14px; }
-.n-course-nav a { padding: 6px 0; color: var(--ink); text-decoration: underline; text-decoration-color: var(--sabi); text-underline-offset: 7px; }
-.n-course-nav a:hover, .n-course-nav a:focus-visible { color: var(--gosu); }
-@media (min-width: 760px) { .n-course-scene { padding-inline: 40px; } }
+@media (min-width: 760px) { .n-course { --g: 40px; } }
+@media (min-width: 860px) {
+  .n-course {
+    --g: 0px; width: calc(100% - 80px); max-width: 1080px;
+    grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr);
+    grid-template-rows: 1fr auto auto 1fr; /* 右の段を、写真の高さの中ほどに */
+    grid-template-areas: "scene ." "scene head" "scene side" "scene .";
+    column-gap: clamp(40px, 5vw, 64px); padding-block: 48px;
+  }
+  .n-course:first-child { padding-top: 8px; }
+  .n-course-scene { margin: 0; align-self: center; }
+  .n-course-side { display: block; grid-area: side; }
+  .n-course-head { text-align: left; padding: 0; }
+  .n-course-text { margin: 14px 0 0; padding: 0; max-width: none; text-align: left; }
+  .n-course-prod { display: block; width: min(100%, 280px); margin: 20px 0 0; padding: 0; }
+  .n-course-prod figcaption { margin-top: 8px; }
+  .n-course-go { max-width: 360px; margin: 20px 0 0; padding: 0; text-align: left; }
+}
 
 /* ---------- 結び：贈る／ストーリー／作り手／次の季節 ---------- */
 .n-sec { max-width: 760px; margin: 0 auto; padding: clamp(72px, 14vw, 120px) 24px 0; text-align: center; }
